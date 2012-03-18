@@ -1,0 +1,53 @@
+<mtapp:setting
+  id="upload_folder_base"
+  label="<__trans phrase="Upload Folder Base">"
+  label_class="uploaderprefs-text-setting"
+  hint="<__trans phrase="A folder within the site root to place your assets (eg assets/).">"
+  required="0"
+  show_hint="1">
+    <input type="text" name="upload_folder_base" id="upload_folder_base" 
+       value="<mt:var name="upload_folder_base">" />
+</mtapp:setting>
+
+<mtapp:setting
+  id="name_of_siteroot"
+  label="<__trans phrase="Name of Site Root">"
+  label_class="uploaderprefs-text-setting"
+  required="0"
+  show_hint="0">
+    <input type="text" name="name_of_siteroot" id="name_of_siteroot" 
+       value="<mt:var name="name_of_siteroot">" />
+</mtapp:setting>
+
+<mtapp:setting
+  id="date_based_default"
+  label="<__trans phrase="Remove date-based folder option">"
+  label_class="uploaderprefs-checkbox"
+  hint="<__trans phrase="Check this box to Remove date-based directory appear.">"
+  required="0"
+  show_hint="1">
+    <input type="checkbox" name="date_based_default" id="date_based_default" 
+       value="1" <mt:if name="date_based_default"> checked="checked"</mt:if /> />
+</mtapp:setting>
+
+<mtapp:setting
+  id="change_path_disabled"
+  label="<__trans phrase="Disabled for user change upload path.">"
+  label_class="uploaderprefs-checkbox"
+  hint="<__trans phrase="Check this box to for user won't change upload path.">"
+  required="0"
+  show_hint="1">
+    <input type="checkbox" name="change_path_disabled" id="change_path_disabled" 
+       value="1" <mt:if name="change_path_disabled"> checked="checked"</mt:if /> />
+</mtapp:setting>
+
+<mt:ignore><mtapp:setting
+  id="ignore_admin"
+  label="<__trans phrase="Disabled for user change upload path.">"
+  label_class="uploaderprefs-checkbox"
+  hint="<__trans phrase="Check this box to for Admin will change upload path.">"
+  required="0"
+  show_hint="1">
+    <input type="checkbox" name="ignore_admin" id="ignore_admin" 
+       value="1" <mt:if name="ignore_admin"> checked="checked"</mt:if /> />
+</mtapp:setting></mt:ignore>

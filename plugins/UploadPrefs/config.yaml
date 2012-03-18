@@ -1,0 +1,24 @@
+id: 'UploadPrefs'
+name: Upload Prefs
+description: <__trans phrase="Set defaults value of file upload dialogue.">
+blog_config_template: blog_config.tmpl
+version: 1.0
+
+callbacks:
+  template_source.asset_upload:  $UploadPrefs::UploadPrefs::Plugin::xfm_src
+settings:
+  upload_folder_base:
+    default: ''
+    scope: blog
+  name_of_siteroot:
+    default: <__trans phrase="Site Root">
+    scope: blog
+  date_based_default:
+    default: 0
+    scope: blog
+  change_path_disabled:
+    default: 0
+    scope: blog
+  ignore_admin:
+    default: 0
+    scope: blog
