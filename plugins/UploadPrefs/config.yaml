@@ -1,6 +1,6 @@
 id: 'UploadPrefs'
 name: Upload Prefs
-description: <__trans phrase="Set defaults value of file upload dialogue.">
+description: <__trans phrase="Set default values of file upload dialogue.">
 blog_config_template: blog_config.tmpl
 version: 1.0
 
