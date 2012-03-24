@@ -87,7 +87,10 @@ HTML
   <script>
   jQuery(document).ready( function () {
    jQuery('#file').change(function() {
-    readURL(this);
+    jQuery('#preview_block').attr('style', 'display:none;');
+    if(jQuery('#file').val().match(/\\.(jpe?g|gif|png)\$/i)){
+     readURL(this);
+    }
    });
   });
   function readURL(input) {
