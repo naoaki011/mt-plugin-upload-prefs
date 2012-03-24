@@ -1,11 +1,13 @@
-id: 'UploadPrefs'
 name: Upload Prefs
-description: <__trans phrase="Set default values of file upload dialogue.">
-blog_config_template: blog_config.tmpl
-version: 1.0
+id: 'UploadPrefs'
+description: <__trans phrase="Set default values and actions of file upload.">
+author_name: naoaki.onozaki
+author_link: http://www.zelazny.mydns.jp/
+plugin_link: https://github.com/naoaki011/mt-plugin-upload-prefs
+l10n_class:  UploadPrefs::L10N
+version: 1.01
 
-callbacks:
-  template_source.asset_upload:  $UploadPrefs::UploadPrefs::Plugin::xfm_src
+blog_config_template: blog_config_upload_prefs.tmpl
 settings:
   upload_folder_base:
     default: ''
@@ -16,9 +18,14 @@ settings:
   date_based_default:
     default: 0
     scope: blog
+  ignore_root_path:
+    default: 0
+    scope: blog
   change_path_disabled:
     default: 0
     scope: blog
-  ignore_admin:
-    default: 0
-    scope: blog
+#  admin_only:
+#    default: 0
+#    scope: blog
+callbacks:
+  template_source.asset_upload:  $UploadPrefs::UploadPrefs::Plugin::xfm_src

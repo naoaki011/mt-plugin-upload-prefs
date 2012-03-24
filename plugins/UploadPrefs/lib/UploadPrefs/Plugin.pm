@@ -64,6 +64,52 @@ HTML
 HTML
     $$tmpl =~ s!$old!$new!;
   }
+
+  my $ua = $ENV{'HTTP_USER_AGENT'};
+  if ($ua =~ /(Firefox\/|Chrome\/|Opera\/)/) {
+    my $old = <<'HTML';
+<form method="post" enctype="multipart/form-data" action="<mt:var name="script_url">" id="upload-form" onsubmit="return validate(this)">
+HTML
+    $old = quotemeta($old);
+    my $new = <<"HTML";
+<div id="preview_block" style="display:none;">
+  <img id="image_preview" src="#" style="position:absolute;border:1px solid #ccc;padding:5px;" width="150" />
+</div>
+<form method="post" enctype="multipart/form-data" action="<mt:var name="script_url">" id="upload-form" onsubmit="return validate(this)">
+HTML
+    $$tmpl =~ s!$old!$new!;
+    $old = <<'HTML';
+<input type="file" name="file" id="file" />
+HTML
+    $old = quotemeta($old);
+    my $new = <<"HTML";
+<input type="file" name="file" id="file" />
+  <script>
+  jQuery(document).ready( function () {
+   jQuery('#file').change(function() {
+    readURL(this);
+   });
+  });
+  function readURL(input) {
+   if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+     jQuery('#image_preview').attr('src', e.target.result);
+     jQuery('#preview_block').attr('style', 'display:block;margin-left:640px;');
+    };
+    reader.readAsDataURL(input.files[0]);
+   }
+  }
+  </script>
+  <style type="text/css">
+  #main-content div {
+   width: 620px;
+  }
+  </style>
+HTML
+    $$tmpl =~ s!$old!$new!;
+  }
+
   1;
 }
 
