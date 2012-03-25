@@ -24,9 +24,9 @@ settings:
   change_path_disabled:
     default: 0
     scope: blog
-#  admin_only:
-#    default: 0
-#    scope: blog
+  admin_only:
+    default: 0
+    scope: blog
 callbacks:
   template_source.asset_upload:
     code: $UploadPrefs::UploadPrefs::Plugin::xfm_src

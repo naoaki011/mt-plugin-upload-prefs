@@ -8,9 +8,19 @@ sub xfm_src {
   my ($cb, $app, $tmpl) = @_;
   my $blog = $app->blog or return;
   return unless ((MT->version_number >= 5.12) && (MT->version_number < 5.2));
+  my $user = current_user( $app ) or return;
   my $plugin = MT->component("UploadPrefs");
-  my $upload_folder_base = $plugin->get_config_value('upload_folder_base' , 'blog:' . $blog->id ) || '';
 
+  my $admin_only = $plugin->get_config_value('admin_only' , 'blog:' . $blog->id ) || 0;
+  my $is_admin;
+  if ($admin_only) {
+    $is_admin = $user->is_superuser ? 1
+                                    : $app->can_do('administer_blog') ? 2
+                                                                      : 0;
+    MT->log('admin: ' . $is_admin);
+  }
+
+  my $upload_folder_base = $plugin->get_config_value('upload_folder_base' , 'blog:' . $blog->id ) || '';
   my %f;
   my($sec, $min,  $hour, $day, $mon, $year, $wday, $yday, $isdst) = localtime;
   $f{'Y'} = sprintf('%04d', ($year + 1900));
@@ -82,7 +92,12 @@ HTML
     $$tmpl =~ s!<__trans phrase="Site Root">!$name_of_siteroot!;
   }
   else {
-    my $old = <<'HTML';
+    if (($is_admin)||($admin_only)) {
+
+
+    }
+    else {
+      my $old = <<'HTML';
      <select name="site_path" id="site_path" onchange="setExtraPath(this)">
        <option value="1">&#60;<__trans phrase="Site Root">&#62;</option>
      <mt:if name="enable_archive_paths">
@@ -96,12 +111,19 @@ HTML
      </select> / <input type="text" name="extra_path" id="extra_path" class="text path" value="<mt:var name="extra_path" escape="html">" />
      <a href="javascript:void(0);" mt:command="open-folder-selector" class="toggle-link"><__trans phrase="Choose Folder"></a>
 HTML
-    $old = quotemeta($old);
-    my $new = <<"HTML";
+      $old = quotemeta($old);
+      my $new;
+      $new = <<"HTML";
      <input type="hidden" name="site_path" value="1" />$name_of_siteroot&nbsp;&frasl;&nbsp;
-     <input type="text" name="extra_path" id="extra_path" class="extra-path" readonly="readonly" value="$upload_folder_base" style="width:20em;" />
+     <input type="text" name="extra_path" id="extra_path" class="extra-path" readonly="readonly" value="$upload_folder_base" style="background-color:#ccc;width:16em;" />
+     <script type="text/javascript">
+       jQuery(document).ready( function () {
+         jQuery('#site_path-field .hint').hide();
+       });
+     </script>
 HTML
-    $$tmpl =~ s!$old!$new!;
+      $$tmpl =~ s!$old!$new!;
+    }
   }
 
   my $ua = $ENV{'HTTP_USER_AGENT'};
@@ -157,6 +179,16 @@ HTML
   }
 
   1;
+}
+
+sub current_user {
+    my $app = shift || MT->instance();
+    my $user;
+    eval { $user = $app->user };
+    unless ( $@ ) {
+        return $user if defined $user;
+    }
+    return undef;
 }
 
 1;

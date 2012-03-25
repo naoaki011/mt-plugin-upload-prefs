@@ -43,11 +43,27 @@
        value="1" <mt:if name="change_path_disabled"> checked="checked"</mt:if /> />
 </mtapp:setting>
 
-<mt:ignore><mtapp:setting
+<mtapp:setting
   id="admin_only"
   label="<__trans phrase="Enabled for admin change upload path.">"
   hint="<__trans phrase="Check this box to Admin will change upload path.">"
   show_hint="1">
     <input type="checkbox" name="admin_only" id="admin_only" 
        value="1" <mt:if name="admin_only"> checked="checked"</mt:if /> />
-</mtapp:setting></mt:ignore>
+    <script type="text/javascript">
+    if(jQuery("#change_path_disabled").attr('checked') == true) {
+      jQuery('#admin_only-field').show();
+    }
+    else {
+      jQuery('#admin_only-field').hide();
+    }
+    jQuery("#change_path_disabled").click(function() {
+      if(jQuery("#change_path_disabled").attr('checked') == true) {
+        jQuery('#admin_only-field').show();
+      }
+      else {
+        jQuery('#admin_only-field').hide();
+      }
+    });
+    </script>
+</mtapp:setting>
