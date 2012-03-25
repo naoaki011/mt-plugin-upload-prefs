@@ -98,7 +98,11 @@ HTML
     var reader = new FileReader();
     reader.onload = function (e) {
      jQuery('#image_preview').attr('src', e.target.result);
+<mt:if name="dialog">
+     jQuery('#preview_block').attr('style', 'display:block;margin-left:460px;margin-top:-40px;padding-bottom:40px;');
+<mt:else>
      jQuery('#preview_block').attr('style', 'display:block;margin-left:640px;');
+</mt:if>
     };
     reader.readAsDataURL(input.files[0]);
    }
