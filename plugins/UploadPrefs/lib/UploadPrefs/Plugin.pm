@@ -10,6 +10,45 @@ sub xfm_src {
   return unless ((MT->version_number >= 5.13) && (MT->version_number < 5.2));
   my $plugin = MT->component("UploadPrefs");
   my $upload_folder_base = $plugin->get_config_value('upload_folder_base' , 'blog:' . $blog->id ) || '';
+
+  my %f;
+  my($sec, $min,  $hour, $day, $mon, $year, $wday, $yday, $isdst) = localtime;
+  $f{'Y'} = sprintf('%04d', ($year + 1900));
+  $f{'y'} = sprintf('%02d', $year);
+  $f{'b'} = qw/jan feb mar apr may jun jul aug sep oct nov dec/[$mon];
+  $f{'m'} = sprintf('%02d', (++$mon));
+  $f{'d'} = sprintf('%02d', ($day));
+  $f{'j'} = sprintf('%03d', ($yday));
+  $f{'H'} = sprintf('%02d', ($hour));
+  $f{'M'} = sprintf('%02d', ($min));
+  $f{'S'} = sprintf('%02d', ($sec));
+  $f{'w'} = $wday;
+  $f{'a'} = qw/sun mon tue wed thu fri sat/[$wday];
+
+  my $modifier;
+  $modifier = quotemeta('%Y');
+  $upload_folder_base =~ s!$modifier!$f{'Y'}!;
+  $modifier = quotemeta('%y');
+  $upload_folder_base =~ s!$modifier!$f{'y'}!;
+  $modifier = quotemeta('%m');
+  $upload_folder_base =~ s!$modifier!$f{'m'}!;
+  $modifier = quotemeta('%b');
+  $upload_folder_base =~ s!$modifier!$f{'b'}!;
+  $modifier = quotemeta('%d');
+  $upload_folder_base =~ s!$modifier!$f{'d'}!;
+  $modifier = quotemeta('%j');
+  $upload_folder_base =~ s!$modifier!$f{'j'}!;
+  $modifier = quotemeta('%H');
+  $upload_folder_base =~ s!$modifier!$f{'H'}!;
+  $modifier = quotemeta('%M');
+  $upload_folder_base =~ s!$modifier!$f{'M'}!;
+  $modifier = quotemeta('%S');
+  $upload_folder_base =~ s!$modifier!$f{'S'}!;
+  $modifier = quotemeta('%w');
+  $upload_folder_base =~ s!$modifier!$f{'w'}!;
+  $modifier = quotemeta('%a');
+  $upload_folder_base =~ s!$modifier!$f{'a'}!;
+
   my $name_of_siteroot = $plugin->get_config_value('name_of_siteroot' , 'blog:' . $blog->id ) || '<__trans phrase="Site Root">';
   my $change_path_disabled = $plugin->get_config_value('change_path_disabled' , 'blog:' . $blog->id ) || 0;
   unless ($change_path_disabled) { 
