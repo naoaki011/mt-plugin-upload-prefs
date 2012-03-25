@@ -7,7 +7,7 @@ use strict;
 sub xfm_src {
   my ($cb, $app, $tmpl) = @_;
   my $blog = $app->blog or return;
-  return unless ((MT->version_number >= 5.13) && (MT->version_number < 5.2));
+  return unless ((MT->version_number >= 5.12) && (MT->version_number < 5.2));
   my $plugin = MT->component("UploadPrefs");
   my $upload_folder_base = $plugin->get_config_value('upload_folder_base' , 'blog:' . $blog->id ) || '';
 
