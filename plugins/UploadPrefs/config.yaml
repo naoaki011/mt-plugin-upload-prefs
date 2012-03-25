@@ -28,4 +28,6 @@ settings:
 #    default: 0
 #    scope: blog
 callbacks:
-  template_source.asset_upload:  $UploadPrefs::UploadPrefs::Plugin::xfm_src
+  template_source.asset_upload:
+    code: $UploadPrefs::UploadPrefs::Plugin::xfm_src
+    priority: 1
