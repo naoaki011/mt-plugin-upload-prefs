@@ -7,7 +7,7 @@ use vars qw( %Lexicon );
 %Lexicon = (
     'Set default values and actions of file upload.' => 'ファイルアップロード時のデフォルト値と動作を変更します。',
     'Upload Folder Base' => 'アップロードフォルダ',
-    'A folder within the site root to place your assets (eg assets/).' => 'デフォルのでのアイテムのアップロード先 (例 assets/)',
+    'A folder within the site root to place your assets (eg assets/ or images/%Y/%m/).' => 'デフォルのでのアイテムのアップロード先 (例 assets/ images/%Y/%m/)',
     'Name of Site Root' => 'サイトルートの名前',
     'Change text of &quot;Site Root&quot; in display.' => '”サイトルート”を別名で表示します。',
     'Remove date-based folder option' => '日付ベースのオプションを削除',
