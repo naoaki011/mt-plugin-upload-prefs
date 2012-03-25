@@ -14,7 +14,7 @@ sub xfm_src {
   my %f;
   my($sec, $min,  $hour, $day, $mon, $year, $wday, $yday, $isdst) = localtime;
   $f{'Y'} = sprintf('%04d', ($year + 1900));
-  $f{'y'} = sprintf('%02d', $year);
+  $f{'y'} = substr($f{'Y'}, 2, 2);
   $f{'b'} = qw/jan feb mar apr may jun jul aug sep oct nov dec/[$mon];
   $f{'m'} = sprintf('%02d', (++$mon));
   $f{'d'} = sprintf('%02d', ($day));
