@@ -112,7 +112,7 @@ HTML
     $old = quotemeta($old);
     my $new = <<"HTML";
 <div id="preview_block" style="display:none;">
-  <img id="image_preview" src="#" style="position:absolute;border:1px solid #ccc;padding:5px;" width="150" />
+  <img id="image_preview" src="#" style="position:absolute;border:1px solid #ccc;padding:5px;background-color:#fff;" width="150" />
 </div>
 <form method="post" enctype="multipart/form-data" action="<mt:var name="script_url">" id="upload-form" onsubmit="return validate(this)">
 HTML
