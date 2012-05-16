@@ -4,10 +4,10 @@ use MT 5.1;
 use warnings;
 use strict;
 
-sub xfm_src {
+sub _asset_src_upload {
   my ($cb, $app, $tmpl) = @_;
   my $blog = $app->blog or return;
-  return unless ((MT->version_number >= 5.12) && (MT->version_number < 5.2));
+  return unless ((MT->version_number >= 5) && (MT->version_number < 5.2));
   my $user = current_user( $app ) or return;
   my $plugin = MT->component("UploadPrefs");
 
@@ -17,7 +17,7 @@ sub xfm_src {
     $is_admin = $user->is_superuser ? 1
                                     : $app->can_do('administer_blog') ? 2
                                                                       : 0;
-    MT->log('admin: ' . $is_admin);
+    #MT->log('admin: ' . $is_admin);
   }
 
   my $upload_folder_base = $plugin->get_config_value('upload_folder_base' , 'blog:' . $blog->id ) || '';
@@ -126,6 +126,30 @@ HTML
     }
   }
 
+  my $ignore_root = $plugin->get_config_value('ignore_root_path' , 'blog:' . $blog->id ) || 0;
+  if ($ignore_root) {
+    my $old = <<'HTML';
+  <div class="actions-bar">
+HTML
+    $old = quotemeta($old);
+    my $new = <<"HTML";
+  <script type="text/javascript">
+    jQuery(document).ready( function () {
+     jQuery('#upload-form').validate({
+      rules: {
+       extra_path: "required"
+      },
+      messages: {
+       extra_path: "<__trans_section component="UploadPrefs"><__trans phrase="Ignore BlankPath."></__trans_section>"
+      }
+     });
+    });
+  </script>
+  <div class="actions-bar">
+HTML
+    $$tmpl =~ s!$old!$new!;
+  }
+
   my $ua = $ENV{'HTTP_USER_AGENT'};
   if ($ua =~ /(Firefox\/|Chrome\/|Opera\/)/) {
     my $old = <<'HTML';
@@ -143,7 +167,7 @@ HTML
 <input type="file" name="file" id="file" />
 HTML
     $old = quotemeta($old);
-    my $new = <<"HTML";
+    $new = <<"HTML";
 <input type="file" name="file" id="file" />
   <script>
   jQuery(document).ready( function () {
@@ -189,6 +213,16 @@ sub current_user {
         return $user if defined $user;
     }
     return undef;
+}
+
+sub include_multibyte {
+    my ( $file_path ) = @_;
+    my $file_basename = File::Basename::basename( $file_path );
+    my $encoded = encode_url( $file_basename );
+    unless ( $file_basename eq $encoded ) {
+        return 1;
+    }
+    return 0;
 }
 
 1;

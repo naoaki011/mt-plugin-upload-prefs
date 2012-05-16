@@ -1,16 +1,16 @@
 name: Upload Prefs
-id: 'UploadPrefs'
+id: UploadPrefs
 description: <__trans phrase="Set default values and actions of file upload.">
 author_name: naoaki.onozaki
 author_link: http://www.zelazny.mydns.jp/
 plugin_link: https://github.com/naoaki011/mt-plugin-upload-prefs
 l10n_class:  UploadPrefs::L10N
-version: 1.01
+version: 1.02
 
 blog_config_template: blog_config_upload_prefs.tmpl
 settings:
   upload_folder_base:
-    default: ''
+    default: 'images/'
     scope: blog
   name_of_siteroot:
     default: <__trans phrase="Site Root">
@@ -29,5 +29,5 @@ settings:
     scope: blog
 callbacks:
   template_source.asset_upload:
-    code: $UploadPrefs::UploadPrefs::Plugin::xfm_src
+    code: $UploadPrefs::UploadPrefs::Plugin::_asset_src_upload
     priority: 1

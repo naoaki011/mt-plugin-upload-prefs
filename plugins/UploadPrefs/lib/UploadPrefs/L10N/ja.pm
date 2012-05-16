@@ -18,6 +18,7 @@ use vars qw( %Lexicon );
     'Check this box to Admin will change upload path.' => 'ここにチェックを入れると、管理者のみアップロード先の変更が可能になります。',
     'Disabled Upload Site Root' => 'サイトルートへのアップロードを禁止',
     'Check this box to Never Upload Site Root.' => 'ここにチェックを入れると、サイトルートへのアップロードが出来なくなります。',
+    'Ignore BlankPath.' => 'パスを空白には出来ません',
 );
 
 1;
