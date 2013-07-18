@@ -7,7 +7,7 @@ use strict;
 sub _asset_src_upload {
   my ($cb, $app, $tmpl) = @_;
   my $blog = $app->blog or return;
-  return unless ((MT->version_number >= 5) && (MT->version_number < 5.2));
+  return unless ((MT->version_number >= 5) && (MT->version_number < 6.1));
   my $user = current_user( $app ) or return;
   my $plugin = MT->component("UploadPrefs");
 
